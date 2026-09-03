@@ -21,12 +21,14 @@ IDs are UUIDs. Boards are addressed by `slug`. List/search filters use status **
 
 Two MCP connectors:
 
-- `feedjolt-reader` → `https://api.feedjolt.com/mcp/reader`
-- `feedjolt-writer` → `https://api.feedjolt.com/mcp/writer`
+- `feedjolt-reader` → `https://api.feedjolt.com/mcp/reader/`
+- `feedjolt-writer` → `https://api.feedjolt.com/mcp/writer/`
 
 Plus a `feedjolt` skill that says when to call them.
 
-Auth is `Authorization: Bearer` with a workspace API key (`fjk_…`). Both connectors use the same plugin variable `FEEDJOLT_API_KEY`. This repo has no secrets.
+Cursor auth is native OAuth: Install → Connect → browser consent on feedjolt.com → token. This plugin does not ask for an API key. This repo has no secrets.
+
+API keys (`fjk_…`) still work as a second credential for Claude, mcp-remote, and curl. They are the non-Cursor fallback, not this plugin.
 
 The combined endpoint `https://api.feedjolt.com/mcp/` is legacy. Do not add it next to the split servers.
 
@@ -34,11 +36,9 @@ The live writer includes create/delete (posts, boards, tags, statuses, comments,
 
 ## Install
 
-From the Cursor Marketplace (once listed): install `feedjolt`, set `FEEDJOLT_API_KEY` under Plugins → Configure, reload.
+From the Cursor Marketplace (once listed): install `feedjolt` → Connect → complete browser consent on feedjolt.com → token. Cursor may show two Connect buttons (reader and writer). That is expected.
 
-Locally: copy this directory to `~/.cursor/plugins/local/feedjolt` as a real directory (not a symlink whose target is outside that folder). Set the same variable, reload.
-
-Create a key in Feedjolt settings. One key is scoped to one workspace.
+Locally: copy this directory to `~/.cursor/plugins/local/feedjolt` as a real directory (not a symlink whose target is outside that folder). Connect the same way, then reload.
 
 ## Agent rules
 
