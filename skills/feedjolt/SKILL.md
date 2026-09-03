@@ -7,7 +7,7 @@ description: >-
 
 # Feedjolt
 
-Live MCP. Two connectors: `feedjolt-reader` and `feedjolt-writer`. Do not invent posts, votes, comments, or changelog text.
+Live MCP over OAuth 2.1. Two connectors: `feedjolt-reader` and `feedjolt-writer`. Cursor Connects them (browser consent). Do not invent posts, votes, comments, or changelog text. Do not ask for an API key in Cursor.
 
 ## Data shape
 
@@ -30,7 +30,7 @@ IDs are UUIDs. Boards are addressed by `slug`. Status filters on list/search use
 
 The live writer includes create/delete for posts, boards, tags, statuses, comments, and changelog entries. The marketing page still says it does not. Trust the tools.
 
-Do not configure the combined `/mcp/` URL alongside these two connectors.
+Do not configure the combined `/mcp/` URL alongside these two connectors. Combined is the JWT audience, not a third marketplace connector.
 
 ## Rules
 
@@ -44,3 +44,4 @@ Do not configure the combined `/mcp/` URL alongside these two connectors.
 
 - Invent API data.
 - Put API keys in chat, git, or the skill.
+- Add a required `FEEDJOLT_API_KEY` variable or Bearer header on these Cursor connectors.
