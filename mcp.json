@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "feedjolt-reader": {
+      "url": "https://api.feedjolt.com/mcp/reader",
+      "headers": {
+        "Authorization": "Bearer ${FEEDJOLT_API_KEY}"
+      }
+    },
+    "feedjolt-writer": {
+      "url": "https://api.feedjolt.com/mcp/writer",
+      "headers": {
+        "Authorization": "Bearer ${FEEDJOLT_API_KEY}"
+      }
+    }
+  }
+}

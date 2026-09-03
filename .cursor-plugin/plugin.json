@@ -1,0 +1,33 @@
+{
+  "name": "feedjolt",
+  "version": "0.1.0",
+  "description": "Read and triage Feedjolt feedback, roadmap, and changelog from the editor. Split reader and writer Streamable HTTP MCP.",
+  "author": {
+    "name": "Feedjolt",
+    "email": "marc@feedjolt.com"
+  },
+  "homepage": "https://www.feedjolt.com",
+  "license": "MIT",
+  "keywords": [
+    "feedback",
+    "roadmap",
+    "changelog",
+    "mcp",
+    "product"
+  ],
+  "logo": "assets/logo.svg",
+  "variables": {
+    "type": "object",
+    "properties": {
+      "FEEDJOLT_API_KEY": {
+        "type": "string",
+        "title": "Feedjolt API key",
+        "description": "Workspace API key (starts with fjk_). Sent as Authorization Bearer. Create it in Feedjolt settings. One key is scoped to one workspace."
+      }
+    },
+    "required": [
+      "FEEDJOLT_API_KEY"
+    ]
+  },
+  "repository": "https://github.com/luodaint/feedjolt-cursor-plugin"
+}
