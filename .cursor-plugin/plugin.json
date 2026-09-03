@@ -1,7 +1,7 @@
 {
   "name": "feedjolt",
   "version": "0.1.1",
-  "description": "Read and triage Feedjolt feedback, roadmap, and changelog from the editor. Split reader and writer Streamable HTTP MCP.",
+  "description": "Read and triage Feedjolt feedback, roadmap, and changelog from the editor. OAuth 2.1 (DCR/PKCE) on split reader and writer Streamable HTTP MCP. API keys remain a non-Cursor fallback.",
   "author": {
     "name": "Feedjolt",
     "email": "marc@feedjolt.com"
@@ -13,6 +13,7 @@
     "roadmap",
     "changelog",
     "mcp",
+    "oauth",
     "product"
   ],
   "logo": "assets/logo.svg",
