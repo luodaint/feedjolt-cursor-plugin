@@ -2,7 +2,10 @@
 
 Cursor plugin that wraps Feedjolt's live Streamable HTTP MCP so the agent can read and triage feedback, the roadmap, and the changelog without leaving the editor.
 
+**Auth in Cursor is OAuth 2.1** (DCR + PKCE S256). Install, Connect, approve in the browser on feedjolt.com, done. No API key in this plugin.
+
 Docs: https://www.feedjolt.com/en/feedback-mcp-server
+OAuth path: https://www.feedjolt.com/en/docs/developers (MCP OAuth)
 
 ## Data shape
 
@@ -19,26 +22,28 @@ IDs are UUIDs. Boards are addressed by `slug`. List/search filters use status **
 
 ## What it ships
 
-Two MCP connectors:
+Two MCP connectors (URL-only — Cursor discovers OAuth itself):
 
-- `feedjolt-reader` → `https://api.feedjolt.com/mcp/reader`
-- `feedjolt-writer` → `https://api.feedjolt.com/mcp/writer`
+- `feedjolt-reader` → `https://api.feedjolt.com/mcp/reader/`
+- `feedjolt-writer` → `https://api.feedjolt.com/mcp/writer/`
 
 Plus a `feedjolt` skill that says when to call them.
 
-Auth is `Authorization: Bearer` with a workspace API key (`fjk_…`). Both connectors use the same plugin variable `FEEDJOLT_API_KEY`. This repo has no secrets.
+Feedjolt is its own OAuth 2.1 authorization server (`/.well-known/oauth-authorization-server`, DCR at `/oauth/register`, PKCE S256). Protected-resource metadata is `/.well-known/oauth-protected-resource/mcp`. JWT `aud` is `https://api.feedjolt.com/mcp`. Reader and writer are aliases of that resource. Cursor owns discovery, DCR, browser consent, and token storage. Do not pre-register a Cursor `CLIENT_ID`.
 
-The combined endpoint `https://api.feedjolt.com/mcp/` is legacy. Do not add it next to the split servers.
+API keys (`fjk_…`) still work as a **second credential** for Claude, mcp-remote, and curl. They do not belong in this Cursor plugin while OAuth discovery is on (Cursor may ignore Bearer headers once RFC 9728/8414 return 200).
+
+The combined endpoint `https://api.feedjolt.com/mcp/` is the JWT audience and a legacy combined MCP. Do not add it next to the split servers.
 
 The live writer includes create/delete (posts, boards, tags, statuses, comments, changelog). Older marketing copy says it cannot. Trust the tools.
 
-## Install
+## Install (Cursor)
 
-From the Cursor Marketplace (once listed): install `feedjolt`, set `FEEDJOLT_API_KEY` under Plugins → Configure, reload.
+1. Install `feedjolt` from the Cursor Marketplace (or copy this directory to `~/.cursor/plugins/local/feedjolt` as a real directory).
+2. Connect each server when Cursor prompts. Approve in the browser on feedjolt.com.
+3. Cursor may show two Connect buttons (reader and writer). Same `aud` can cover both; two prompts are fine.
 
-Locally: copy this directory to `~/.cursor/plugins/local/feedjolt` as a real directory (not a symlink whose target is outside that folder). Set the same variable, reload.
-
-Create a key in Feedjolt settings. One key is scoped to one workspace.
+No plugin variable to set. No `fjk_` key for this path.
 
 ## Agent rules
 
